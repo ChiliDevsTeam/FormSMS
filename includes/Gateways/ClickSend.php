@@ -66,7 +66,6 @@ class ClickSend implements GatewayInterface {
 				'message'  => __( 'SMS sent successfully', 'texty-forms' ),
 				'response' => $result,
 			];
-			error_log ( print_r( $response, true ) );
 			return $response;
 
 		} catch ( Exception $e ) {
@@ -74,7 +73,6 @@ class ClickSend implements GatewayInterface {
 				'message'  => __( 'The message failed with status:', 'texty-forms' ) . $e->getMessage(),
 				'response' => $e,
 			];
-			error_log ( print_r( $response, true ) );
 			return $response;
 		}
 	}
