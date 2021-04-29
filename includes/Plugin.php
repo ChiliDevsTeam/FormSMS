@@ -14,6 +14,7 @@ use ChiliDevs\TextyForms\Admin\Admin;
 use ChiliDevs\TextyForms\Forms\GravityFormSettings;
 use ChiliDevs\TextyForms\Forms\WpFormSettings;
 use ChiliDevs\TextyForms\Forms\Cf7Settings;
+use ChiliDevs\TextyForms\Forms\EverestFormSettings;
 
 /**
  * Class Plugin.
@@ -64,6 +65,7 @@ class Plugin {
 		new WpFormSettings();
 		new GravityFormSettings();
 		new Cf7Settings();
+		new EverestFormSettings();
 	}
 
 	/**
