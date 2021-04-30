@@ -42,8 +42,8 @@ class FormidableSettings {
 	 */
 	public function add_settings_panel( $panels, $values) {
 		$panels[] = array(
-			'name'    => __( 'SMS Settings', 'texty-forms' ),
-			'anchor'	=> 'sms-settings',
+			'name'     => __( 'SMS Settings', 'texty-forms' ),
+			'anchor'   => 'sms-settings',
 			'function' => [ $this ,'editor_sms_settings' ],
 		);
 
@@ -60,27 +60,28 @@ class FormidableSettings {
 	 * @return html|void
 	 */
 	public function editor_sms_settings( $values ) {
-		$my_form_opts = maybe_unserialize( get_option('frm_mysettings_' . $values['id']) );
-		?>
-		<h3 class="frm_first_h3"><?php _e( 'SMS Settings', 'texty-forms' ); ?>
-			<span class="frm_help frm_icon_font frm_tooltip_icon" title="This is SMS Settings for this form."</span>
-        </h3>
-		<p class="frm6 frm_form_field">
-		<label for="frm_form_sms_admin_phone">
-			<?php esc_html_e( 'Admin Phone Number:', 'texty-forms' ); ?>
-		</label>
-		<input type="text" id="frm_form_sms" name="frm_sms[phone]" value="<?php echo ! empty( $values['sms_settings']['phone'] ) ? esc_attr( $values['sms_settings']['phone'] ) : ''; ?>" />
-		<p><i><?php echo wp_kses_post( sprintf( __( 'Insert your phone number (e.g.: <code>%s</code>)', 'texty-forms' ), '+8801673322116'  ) ) ?></i></p>
-	</p>
-	<p class="frm_has_shortcodes">
-		<label for="frm_message_body">
-			<?php esc_html_e( 'Enter SMS Body:', 'formidable' ); ?>
-		</label>
-		<textarea id="frm_form_sms_body" name="frm_sms[message]" cols="50" rows="4"><?php echo ! empty( $values['sms_settings']['message'] ) ? esc_attr( $values['sms_settings']['message'] ) : ''; ?></textarea>
-		<p><i><?php esc_html_e( 'Enter your custom SMS text. Just follow the Mail -> Message Body section convention', 'texty-forms' ); ?></i></p>
-	</p>
+		$my_form_opts = maybe_unserialize( get_option('frm_mysettings_' . $values['id'] ) );
 
-	<?php
+		?>
+			<h3 class="frm_first_h3"><?php _e( 'SMS Settings', 'texty-forms' ); ?>
+				<span class="frm_help frm_icon_font frm_tooltip_icon" title= "<?php esc_html_e('This is SMS Settings for this form.','texty-forms') ?>"</span>
+        	</h3>
+			<p class="frm6 frm_form_field">
+				<label for="frm_form_sms_admin_phone">
+					<?php esc_html_e( 'Admin Phone Number:', 'texty-forms' ); ?>
+				</label>
+				<input type="text" id="frm_form_sms" name="frm_sms[phone]" value="<?php echo ! empty( $values['sms_settings']['phone'] ) ? esc_attr( $values['sms_settings']['phone'] ) : ''; ?>" />
+				<p><i><?php echo wp_kses_post( sprintf( __( 'Insert your phone number (e.g.: <code>%s</code>)', 'texty-forms' ), '+8801673322116'  ) ) ?></i></p>
+			</p>
+			<p class="frm_has_shortcodes">
+				<label for="frm_message_body">
+					<?php esc_html_e( 'Enter SMS Body:', 'formidable' ); ?>
+				</label>
+				<textarea id="frm_form_sms_body" name="frm_sms[message]" cols="50" rows="4"><?php echo ! empty( $values['sms_settings']['message'] ) ? esc_attr( $values['sms_settings']['message'] ) : ''; ?></textarea>
+				<p><i><?php esc_html_e( 'Enter your custom SMS text. Just follow the Mail -> Message Body section convention', 'texty-forms' ); ?></i></p>
+			</p>
+
+		<?php
 	}
 
 	/**
@@ -115,7 +116,7 @@ class FormidableSettings {
 	 *
 	 * @return WP_Error | void
 	 */
-	function send_sms( $entry_id,$form_id ) {
+	function send_sms( $entry_id, $form_id ) {
 		$options = get_option( 'textyforms_sms_settings' );
 
 		$entry = \FrmEntry::getOne( $entry_id );
@@ -127,20 +128,18 @@ class FormidableSettings {
 		$message = \FrmFieldsHelper::basic_replace_shortcodes( $body, $form, $entry );
 		$prev_mail_body = $message;
 		$pass_entry     = clone $entry; // make a copy to prevent changes by reference
-		$message_body      = \FrmEntriesHelper::replace_default_message(
+		$message_body   = \FrmEntriesHelper::replace_default_message(
 			$prev_mail_body,
 			array(
-				'id'         => $entry_id,
-				'entry'      => $pass_entry,
-				)
+				'id'        => $entry_id,
+				'entry'     => $pass_entry,
+			)
 			);
 			$final_message_body = strip_tags( $message_body );
-			$form_data = [
-			'number' => ! empty( $admin_phone ) ? $admin_phone : '',
-			'body'   => $final_message_body,
-		];
-
-
+			$form_data 			= [
+						'number' => ! empty( $admin_phone ) ? $admin_phone : '',
+						'body'   => $final_message_body,
+			];
 		$sms_gateway   = $options['sms_gateway'];
 		$classname     = textyforms_class_mapping( $sms_gateway );
 		$gateway_class = new $classname();
