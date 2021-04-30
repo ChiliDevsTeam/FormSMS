@@ -54,13 +54,16 @@ class Vonage implements GatewayInterface {
 				'message'  => __( 'SMS sent successfully', 'texty-forms' ),
 				'response' => $message,
 			];
+			error_log(print_r($response, true));
 			return $response;
 		} else {
 			$response = [
 				'message'  => __( 'The message failed with status:', 'texty-forms' ) . $message->getStatus(),
 				'response' => $message,
 			];
+			error_log(print_r($response, true));
 			return $response;
+
 		}
 	}
 }
