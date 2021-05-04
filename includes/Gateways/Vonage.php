@@ -61,6 +61,7 @@ class Vonage implements GatewayInterface {
 				'response' => $message,
 			];
 			return $response;
+
 		}
 	}
 }

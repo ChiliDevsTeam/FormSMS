@@ -186,7 +186,6 @@ class Admin {
 		$clicksend_username = textyforms_get_option( 'clicksend_username', 'textyforms_sms_settings', '' );
 		$clicksend_api      = textyforms_get_option( 'clicksend_api', 'textyforms_sms_settings', '' );
 		$clicksend_helper   = sprintf( __( 'Enter ClickSend details. Please visit <a href="%s" target="_blank">%s</a> and get your username and api keys', 'texty-forms' ), 'https://dashboard.clicksend.com/signup', 'Clicksend' );
-
 		?>
 
 		<!-- start nexomo block -->

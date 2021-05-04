@@ -91,8 +91,7 @@ class EverestFormSettings {
 				),
 				'parent'     => 'settings',
 				'subsection' => 'sms_settings',
-				/* translators: %s - all fields smart tag. */
-				'after'      => '<p class="desc">' . sprintf( esc_html__( 'To display all form fields, use the %s Smart Tag.', 'texty-forms' ), '<code>{all_fields}</code>' ) . '</p>',
+				'after'      => '<p class="desc">' . sprintf( esc_html__( 'To display form fields, use the Smart Tags clicking "<>" from top right .', 'texty-forms' ) ). '</p>',
 			)
 		);
 
