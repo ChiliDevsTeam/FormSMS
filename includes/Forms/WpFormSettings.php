@@ -89,10 +89,8 @@ class WpFormSettings {
 					'class'      => 'email-msg',
 					'after'      => '<p class="note">' .
 									sprintf(
-										/* translators: %s - {all_fields} Smart Tag. */
-										esc_html__( 'To display all form fields, use the %s Smart Tag.', 'texty-forms' ),
-										'<code>{all_fields}</code>'
-									) .
+										esc_html__( 'To display form fields, use the Smart Tags from "Show Smart Tags" on top right.', 'texty-forms' )
+									).
 									'</p>',
 				)
 			);
