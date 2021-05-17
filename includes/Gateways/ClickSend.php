@@ -4,12 +4,12 @@
  *
  * Manage  ClickSend related functionality
  *
- * @package ChiliDevs\TextyForms
+ * @package ChiliDevs\FormSMS
  */
 
 declare(strict_types=1);
 
-namespace ChiliDevs\TextyForms\Gateways;
+namespace ChiliDevs\FormSMS\Gateways;
 
 use WP_Error;
 use Exception;
@@ -22,7 +22,7 @@ use ClickSend\Model\SmsMessageCollection as ClickSendSMSMessageCollection;
 /**
  *  ClickSend Class.
  *
- * @package ChiliDevs\TextyForms\Gateways
+ * @package ChiliDevs\FormSMS\Gateways
  */
 class ClickSend implements GatewayInterface {
 	/**
@@ -38,11 +38,11 @@ class ClickSend implements GatewayInterface {
 		$clicksend_api_key  = ! empty( $options['clicksend_api'] ) ? $options['clicksend_api'] : '';
 
 		if ( '' === $clicksend_username || '' === $clicksend_api_key ) {
-			return new WP_Error( 'no-gateway-settings', __( 'No Username or API key', 'texty-forms' ), [ 'status' => 401 ] );
+			return new WP_Error( 'no-gateway-settings', __( 'No Username or API key', 'form-sms' ), [ 'status' => 401 ] );
 		}
 
 		if ( empty( $form_data['number'] ) ) {
-			return new WP_Error( 'no-number-found', __( 'No number found for sending SMS', 'texty-forms' ), [ 'status' => 401 ] );
+			return new WP_Error( 'no-number-found', __( 'No number found for sending SMS', 'form-sms' ), [ 'status' => 401 ] );
 		}
 
 		$config = ClickSendConfig::getDefaultConfiguration()
@@ -63,14 +63,14 @@ class ClickSend implements GatewayInterface {
 			$result = $api_instance->smsSendPost( $sms_messages );
 
 			$response = [
-				'message'  => __( 'SMS sent successfully', 'texty-forms' ),
+				'message'  => __( 'SMS sent successfully', 'form-sms' ),
 				'response' => $result,
 			];
 			return $response;
 
 		} catch ( Exception $e ) {
 			$response = [
-				'message'  => __( 'The message failed with status:', 'texty-forms' ) . $e->getMessage(),
+				'message'  => __( 'The message failed with status:', 'form-sms' ) . $e->getMessage(),
 				'response' => $e,
 			];
 			return $response;

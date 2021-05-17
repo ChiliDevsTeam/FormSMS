@@ -4,19 +4,19 @@
  *
  * Manage  FormSettings related functionality
  *
- * @package ChiliDevs\TextyForms
+ * @package ChiliDevs\FormSMS
  */
 
 declare(strict_types=1);
 
-namespace ChiliDevs\TextyForms\Forms;
+namespace ChiliDevs\FormSMS\Forms;
 
 use WP_Error;
 
 /**
  * FormSettings Class.
  *
- * @package ChiliDevs\TextyForms\Forms
+ * @package ChiliDevs\FormSMS\Forms
  */
 class Cf7Settings {
 
@@ -42,7 +42,7 @@ class Cf7Settings {
 	 */
 	public function add_settings_panel( $panels ) {
 		$panels['sms-settings'] = array(
-			'title'    => __( 'SMS Settings', 'texty-forms' ),
+			'title'    => __( 'SMS Settings', 'form-sms' ),
 			'callback' => [ $this, 'editor_sms_settings' ],
 		);
 
@@ -63,27 +63,27 @@ class Cf7Settings {
 		?>
 		<div id="sms-sortables" class="meta-box-sortables ui-sortable">
 			<div id="maildiv" class="postbox ">
-				<div class="handlediv" title="<?php esc_attr_e( 'Click to toggle', 'texty-forms' ) ?>"><br></div>
-				<h3 class="hndle" style="padding:12px;"><span><?php esc_html_e( 'Admin SMS Settings', 'texty-forms' ); ?></span></h3>
+				<div class="handlediv" title="<?php esc_attr_e( 'Click to toggle', 'form-sms' ) ?>"><br></div>
+				<h3 class="hndle" style="padding:12px;"><span><?php esc_html_e( 'Admin SMS Settings', 'form-sms' ); ?></span></h3>
 				<div class="inside">
 					<div class="mail-fields">
 						<div class="half-left">
 							<div class="mail-field">
-								<label for="wpcf7-sms-recipient"><?php esc_html_e( 'Admin Phone Number:', 'texty-forms' ); ?></label><br>
+								<label for="wpcf7-sms-recipient"><?php esc_html_e( 'Admin Phone Number:', 'form-sms' ); ?></label><br>
 								<input type="text" id="wpcf7-sms-recipient" name="cf7_sms[phone]" class="large-text" size="70" value="<?php echo ! empty( $options['phone'] ) ? esc_attr( $options['phone'] ) : ''; ?>">
-								<p><i><?php echo wp_kses_post( sprintf( __( 'Insert your phone number (e.g.: <code>%s</code>)', 'texty-forms' ), '+8801673322116'  ) ) ?></i></p>
+								<p><i><?php echo wp_kses_post( sprintf( __( 'Insert your phone number (e.g.: <code>%s</code>)', 'form-sms' ), '+8801673322116'  ) ) ?></i></p>
 							</div>
 						</div>
 						<br>
 						<div class="half-right">
 							<div class="mail-field">
-								<label for="wpcf7-mail-body"><?php esc_html_e( 'Enter SMS body:', 'texty-forms' ) ?></label><br>
+								<label for="wpcf7-mail-body"><?php esc_html_e( 'Enter SMS body:', 'form-sms' ) ?></label><br>
 								<p>
-									<?php echo esc_html( __( "In the following fields, you can use these mail-tags:", 'texty-forms' ) ); ?><br />
+									<?php echo esc_html( __( "In the following fields, you can use these mail-tags:", 'form-sms' ) ); ?><br />
 									<?php $form->suggest_mail_tags( 'sms-settings' ); ?></legend>
 								</p>
 								<textarea id="wpcf7-mail-body" name="cf7_sms[message]" class="large-text" rows="8"><?php echo ! empty( $options['message'] ) ? esc_attr( $options['message'] ) : ''; ?></textarea>
-								<p><i><?php esc_html_e( 'Enter your custom SMS text. Just follow the Mail -> Message Body section convention', 'texty-forms' ); ?></i></p>
+								<p><i><?php esc_html_e( 'Enter your custom SMS text. Just follow the Mail -> Message Body section convention', 'form-sms' ); ?></i></p>
 							</div>
 						</div>
 
@@ -133,10 +133,10 @@ class Cf7Settings {
 	 * @return WP_Error | void
 	 */
 	public function send_sms( $form ) {
-		$options = get_option( 'textyforms_sms_settings' );
+		$options = get_option( 'form_sms_settings' );
 
 		if ( empty( $options['sms_gateway'] ) ) {
-			return new WP_Error( 'no-options', __( 'Please set your settings first', 'cf7-sms' ), [ 'status' => 401 ] );
+			return new WP_Error( 'no-options', __( 'Please set your settings first', 'form-sms' ), [ 'status' => 401 ] );
 		}
 
 		$replace       = array();
@@ -160,7 +160,7 @@ class Cf7Settings {
 
 		$sms_gateway = $options['sms_gateway'];
 
-		$classname = textyforms_class_mapping( $sms_gateway );
+		$classname = form_sms_class_mapping( $sms_gateway );
 
 		$gateway_class = new $classname();
 		$gateway       = $gateway_class->send( $form_data, $options );

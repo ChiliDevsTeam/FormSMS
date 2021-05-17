@@ -2,24 +2,24 @@
 /**
  * Main plugin class.
  *
- * @package ChiliDevs\TextyForms
+ * @package ChiliDevs\FormSMS
  * @since 1.0.0
  */
 
 declare(strict_types=1);
 
-namespace ChiliDevs\TextyForms;
+namespace ChiliDevs\FormSMS;
 
-use ChiliDevs\TextyForms\Admin\Admin;
-use ChiliDevs\TextyForms\Forms\GravityFormSettings;
-use ChiliDevs\TextyForms\Forms\WpFormSettings;
-use ChiliDevs\TextyForms\Forms\Cf7Settings;
-use ChiliDevs\TextyForms\Forms\EverestFormSettings;
+use ChiliDevs\FormSMS\Admin\Admin;
+use ChiliDevs\FormSMS\Forms\GravityFormSettings;
+use ChiliDevs\FormSMS\Forms\WpFormSettings;
+use ChiliDevs\FormSMS\Forms\Cf7Settings;
+use ChiliDevs\FormSMS\Forms\EverestFormSettings;
 
 /**
  * Class Plugin.
  *
- * @package ChiliDevs\TextyForms
+ * @package ChiliDevs\FormSMS
  */
 class Plugin {
 
@@ -58,7 +58,7 @@ class Plugin {
 	 */
 	public function run(): void {
 		$this->path       = dirname( __FILE__, 2 );
-		$this->url        = plugin_dir_url( trailingslashit( dirname( __FILE__, 2 ) ) . 'texty-forms.php' );
+		$this->url        = plugin_dir_url( trailingslashit( dirname( __FILE__, 2 ) ) . 'form-sms.php' );
 		$this->assets_dir = trailingslashit( $this->url ) . 'assets/';
 		require_once $this->path . '/includes/Admin/functions.php';
 		new Admin();
@@ -75,7 +75,7 @@ class Plugin {
 	 */
 	public function activator(): void {
         // phpcs:ignore;
-		// register_activation_hook( dirname( __FILE__, 2 ) . '/texty-forms.php', [ Installer::class, 'activation' ] );
+		// register_activation_hook( dirname( __FILE__, 2 ) . '/form-sms.php', [ Installer::class, 'activation' ] );
 	}
 
 	/**
@@ -85,6 +85,6 @@ class Plugin {
 	 */
 	public function deactivator(): void {
         // phpcs:ignore;
-		// register_deactivation_hook( dirname( __FILE__, 2 ) . '/texty-forms.php', [ Installer::class, 'activation' ] );
+		// register_deactivation_hook( dirname( __FILE__, 2 ) . '/form-sms.php', [ Installer::class, 'activation' ] );
 	}
 }

@@ -2,21 +2,21 @@
 /**
  * Vonage class
  *
- * Manage  Vonage related functionality on Wp Form
+ * Manage  Vonage related functionality 
  *
- * @package ChiliDevs\TextyForms
+ * @package ChiliDevs\FormSMS
  */
 
 declare(strict_types=1);
 
-namespace ChiliDevs\TextyForms\Gateways;
+namespace ChiliDevs\FormSMS\Gateways;
 
 use WP_Error;
 
 /**
  *  Vonage Class.
  *
- * @package ChiliDevs\TextyForms\Gateways
+ * @package ChiliDevs\FormSMS\Gateways
  */
 class Vonage implements GatewayInterface {
 	/**
@@ -33,11 +33,11 @@ class Vonage implements GatewayInterface {
 		$from_name  = ! empty( $options['nexmo_from_name'] ) ? $options['nexmo_from_name'] : 'VONAGE';
 
 		if ( '' === $api_key || '' === $api_secret ) {
-			return new WP_Error( 'no-gateway-settings', __( 'No API key or Secret found', 'texty-forms' ), [ 'status' => 401 ] );
+			return new WP_Error( 'no-gateway-settings', __( 'No API key or Secret found', 'form-sms' ), [ 'status' => 401 ] );
 		}
 
 		if ( empty( $form_data['number'] ) ) {
-			return new WP_Error( 'no-number-found', __( 'No number found for sending SMS', 'texty-forms' ), [ 'status' => 401 ] );
+			return new WP_Error( 'no-number-found', __( 'No number found for sending SMS', 'form-sms' ), [ 'status' => 401 ] );
 		}
 
 		$basic  = new \Vonage\Client\Credentials\Basic( $api_key, $api_secret );
@@ -51,13 +51,13 @@ class Vonage implements GatewayInterface {
 
 		if ( $message->getStatus() == 0 ) {
 			$response = [
-				'message'  => __( 'SMS sent successfully', 'texty-forms' ),
+				'message'  => __( 'SMS sent successfully', 'form-sms' ),
 				'response' => $message,
 			];
 			return $response;
 		} else {
 			$response = [
-				'message'  => __( 'The message failed with status:', 'texty-forms' ) . $message->getStatus(),
+				'message'  => __( 'The message failed with status:', 'form-sms' ) . $message->getStatus(),
 				'response' => $message,
 			];
 			return $response;

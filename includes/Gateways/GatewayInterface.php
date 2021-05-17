@@ -4,19 +4,19 @@
  *
  * Manage  Getway related functionality on Wp Form
  *
- * @package ChiliDevs\TextyForms
+ * @package ChiliDevs\FormSMS
  */
 
 declare(strict_types=1);
 
-namespace ChiliDevs\TextyForms\Gateways;
+namespace ChiliDevs\FormSMS\Gateways;
 
 use WP_Error;
 
 /**
  * GatewayInterface Interface.
  *
- * @package ChiliDevs\TextyForms\Gateways
+ * @package ChiliDevs\FormSMS\Gateways
  */
 interface GatewayInterface {
 	/**

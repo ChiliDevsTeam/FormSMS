@@ -1,12 +1,12 @@
 <?php
 /**
-Plugin Name: TextyForms
+Plugin Name: FormSMS
 Plugin URI: https://chilidevs.com
-Description: SMS Integration for all contact forms.
+Description: SMS Integration for  contact forms.
 Version: 1.0.0
 Author: chilidevs
 Author URI: http://chilidevs.com/
-Text Domain: texty-forms
+Text Domain: form-sms
 License: GPL2
 */
 
@@ -38,7 +38,7 @@ License: GPL2
 
 declare(strict_types=1);
 
-namespace ChiliDevs\TextyForms;
+namespace ChiliDevs\FormSMS;
 
 // don't call the file directly.
 if ( ! defined( 'ABSPATH' ) ) {

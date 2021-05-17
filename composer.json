@@ -1,5 +1,5 @@
 {
-    "name": "chilidevs/texty-forms",
+    "name": "chilidevs/form-sms",
     "description": "SMS Integration for all contact forms.",
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.5",
@@ -13,12 +13,12 @@
     },
     "autoload": {
         "psr-4": {
-            "ChiliDevs\\TextyForms\\": "includes/"
+            "ChiliDevs\\FormSMS\\": "includes/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "ChiliDevs\\TextyForms\\Tests\\": "tests/php"
+            "ChiliDevs\\FormSMS\\Tests\\": "tests/php"
         }
     },
     "scripts": {

@@ -4,7 +4,7 @@
  *
  * Manage  FormSettings related functionality
  *
- * @package ChiliDevs\TextyForms
+ * @package ChiliDevs\FormSMS
  */
 
 declare(strict_types=1);
@@ -20,7 +20,7 @@ declare(strict_types=1);
  *
  * @return mixed
  */
-function textyforms_get_option( $option, $section, $default = '' ) {
+function form_sms_get_option( $option, $section, $default = '' ) {
 	$options = get_option( $section );
 	if ( isset( $options[ $option ] ) ) {
 		return $options[ $option ];
@@ -35,10 +35,11 @@ function textyforms_get_option( $option, $section, $default = '' ) {
 	 *
 	 * @return array
 	 */
-function textyforms_class_mapping( $class_name = '' ) {
-	$classes = apply_filters( 'textyforms_class_map', [
-		'nexmo'     => ChiliDevs\TextyForms\Gateways\Vonage::class,
-		'clicksend' => ChiliDevs\TextyForms\Gateways\ClickSend::class,
+function form_sms_class_mapping( $class_name = '' ) {
+	$classes = apply_filters( 'form_sms_class_map', [
+		'nexmo'     => ChiliDevs\FormSMS\Gateways\Vonage::class,
+		'clicksend' => ChiliDevs\FormSMS\Gateways\ClickSend::class,
 	] );
 	return isset( $classes[ $class_name ] ) ? $classes[ $class_name ] : '';
 }
+

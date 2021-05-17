@@ -4,20 +4,20 @@
  *
  * Manage all admin related functionality
  *
- * @package ChiliDevs\TextyForms
+ * @package ChiliDevs\FormSMS
  */
 
 declare(strict_types=1);
 
-namespace ChiliDevs\TextyForms\Admin;
+namespace ChiliDevs\FormSMS\Admin;
 
-use  ChiliDevs\TextyForms\Admin\SettingsAPI;
-use function ChiliDevs\TextyForms\plugin;
+use  ChiliDevs\FormSMS\Admin\SettingsAPI;
+use function ChiliDevs\FormSMS\plugin;
 
 /**
  * Admin class.
  *
- * @package ChiliDevs\TextyForms\Admin
+ * @package ChiliDevs\FormSMS\Admin
  */
 class Admin {
 	/**
@@ -39,7 +39,7 @@ class Admin {
 		add_action( 'admin_init', [ $this, 'admin_init' ] );
 		add_action( 'admin_menu', [ $this, 'add_form_settings_menu' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
-		add_action( 'chili_settings_form_bottom_textyforms_sms_settings', [ $this, 'settings_gateway_fields' ] );
+		add_action( 'chili_settings_form_bottom_form_sms_settings', [ $this, 'settings_gateway_fields' ] );
 	}
 
 	/**
@@ -50,8 +50,8 @@ class Admin {
 	 * @since 1.0.0
 	 */
 	public function admin_enqueue_scripts() {
-		wp_enqueue_script( 'admin-texty-forms-scripts', plugin()->assets_dir . '/build/js/admin.build.js', array( 'jquery' ), false, true );
-		wp_localize_script( 'admin-texty-forms-scripts', 'wcmessagemedia', array(
+		wp_enqueue_script( 'admin-form-sms-scripts', plugin()->assets_dir . '/build/js/admin.build.js', array( 'jquery' ), false, true );
+		wp_localize_script( 'admin-form-sms-scripts', 'wcmessagemedia', array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 		) );
 	}
@@ -77,11 +77,11 @@ class Admin {
 	 */
 	public function add_form_settings_menu() {
 		add_menu_page(
-			__( 'TextyForms', 'texty-forms' ),
-			__( 'TextyForms', 'texty-forms' ),
+			__( 'FormSMS', 'form-sms' ),
+			__( 'FormSMS', 'form-sms' ),
 			'manage_options',
-			'texty-forms',
-			[ $this, 'texty_forms_settings_page' ],
+			'form-sms',
+			[ $this, 'form_sms_settings_page' ],
 			'dashicons-admin-generic',
 			10
 		);
@@ -97,9 +97,9 @@ class Admin {
 	public function get_settings_sections() {
 		$sections = [
 			[
-				'id'    => 'textyforms_sms_settings',
+				'id'    => 'form_sms_settings',
 				'title' => '',
-				'name'  => __( 'SMS Settings', 'texty-forms' ),
+				'name'  => __( 'SMS Settings', 'form-sms' ),
 				'icon'  => 'dashicons-admin-tools',
 			],
 		];
@@ -116,11 +116,11 @@ class Admin {
 	 */
 	public function get_settings_fields() {
 		$settings_fields = [
-			'textyforms_sms_settings' => [
+			'form_sms_settings' => [
 				[
 					'name'    => 'sms_gateway',
-					'label'   => __( 'Select Gateway', 'texty-forms' ),
-					'desc'    => __( 'Select your sms gateway', 'texty-forms' ),
+					'label'   => __( 'Select Gateway', 'form-sms' ),
+					'desc'    => __( 'Select your sms gateway', 'form-sms' ),
 					'type'    => 'select',
 					'default' => '-1',
 					'options' => $this->get_sms_gateway(),
@@ -128,7 +128,7 @@ class Admin {
 			],
 		];
 
-		return apply_filters( 'textyforms_get_settings_fields', $settings_fields );
+		return apply_filters( 'form_sms_get_settings_fields', $settings_fields );
 	}
 
 	/**
@@ -138,10 +138,10 @@ class Admin {
 	 *
 	 * @return void
 	 */
-	public function texty_forms_settings_page() {
+	public function form_sms_settings_page() {
 		?>
 			<div class="wrap">
-				<h1><?php esc_html_e( 'SMS Settings', 'texty-forms' ); ?> </h1>
+				<h1><?php esc_html_e( 'SMS Settings', 'form-sms' ); ?> </h1>
 				<hr>
 				<?php
 					$this->settings_api->show_navigation();
@@ -160,12 +160,12 @@ class Admin {
 	 */
 	public function get_sms_gateway() {
 		$gateway = array(
-			''          => __( '--select--', 'texty-forms' ),
-			'nexmo'     => __( 'Vonage(Nexmo)', 'texty-forms' ),
-			'clicksend' => __( 'ClickSend', 'texty-forms' ),
+			''          => __( '--select--', 'form-sms' ),
+			'nexmo'     => __( 'Vonage(Nexmo)', 'form-sms' ),
+			'clicksend' => __( 'ClickSend', 'form-sms' ),
 		);
 
-		return apply_filters( 'textyforms_gateway', $gateway );
+		return apply_filters( 'form_sms_gateway', $gateway );
 	}
 
 	/**
@@ -177,15 +177,15 @@ class Admin {
 	 */
 	public function settings_gateway_fields() {
 		// Nexomo Properties.
-		$nexmo_api        = textyforms_get_option( 'nexmo_api', 'textyforms_sms_settings', '' );
-		$nexmo_api_secret = textyforms_get_option( 'nexmo_api_secret', 'textyforms_sms_settings', '' );
-		$nexmo_from_name  = textyforms_get_option( 'nexmo_from_name', 'textyforms_sms_settings', '' );
-		$nexmo_helper     = sprintf( __( 'Enter your Vonage(Nexmo) details. Please visit <a href="%s" target="_blank">%s</a> and get your api keys and options', 'texty-forms' ), 'https://dashboard.nexmo.com/login', 'Nexmo' );
+		$nexmo_api        = form_sms_get_option( 'nexmo_api', 'form_sms_settings', '' );
+		$nexmo_api_secret = form_sms_get_option( 'nexmo_api_secret', 'form_sms_settings', '' );
+		$nexmo_from_name  = form_sms_get_option( 'nexmo_from_name', 'form_sms_settings', '' );
+		$nexmo_helper     = sprintf( __( 'Enter your Vonage(Nexmo) details. Please visit <a href="%s" target="_blank">%s</a> and get your api keys and options', 'form-sms' ), 'https://dashboard.nexmo.com/login', 'Nexmo' );
 
 		// Clicksend properties.
-		$clicksend_username = textyforms_get_option( 'clicksend_username', 'textyforms_sms_settings', '' );
-		$clicksend_api      = textyforms_get_option( 'clicksend_api', 'textyforms_sms_settings', '' );
-		$clicksend_helper   = sprintf( __( 'Enter ClickSend details. Please visit <a href="%s" target="_blank">%s</a> and get your username and api keys', 'texty-forms' ), 'https://dashboard.clicksend.com/signup', 'Clicksend' );
+		$clicksend_username = form_sms_get_option( 'clicksend_username', 'form_sms_settings', '' );
+		$clicksend_api      = form_sms_get_option( 'clicksend_api', 'form_sms_settings', '' );
+		$clicksend_helper   = sprintf( __( 'Enter ClickSend details. Please visit <a href="%s" target="_blank">%s</a> and get your username and api keys', 'form-sms' ), 'https://dashboard.clicksend.com/signup', 'Clicksend' );
 
 		?>
 
@@ -197,24 +197,24 @@ class Admin {
 			</p>
 			<table class="form-table">
 				<tr valign="top">
-				<th scrope="row"><?php esc_html_e( 'Vonage(Nexmo) API', 'texty-forms' ) ?></th>
+				<th scrope="row"><?php esc_html_e( 'Vonage(Nexmo) API', 'form-sms' ) ?></th>
 					<td>
-						<input type="text" class="regular-text" name="textyforms_sms_settings[nexmo_api]" id="textyforms_sms_settings[nexmo_api]" value="<?php echo esc_attr( $nexmo_api ); ?>">
-						<p class="description"><?php esc_html_e( 'Enter Vonage(Nexmo) API key', 'texty-forms' ); ?></p>
+						<input type="text" class="regular-text" name="form_sms_settings[nexmo_api]" id="form_sms_settings[nexmo_api]" value="<?php echo esc_attr( $nexmo_api ); ?>">
+						<p class="description"><?php esc_html_e( 'Enter Vonage(Nexmo) API key', 'form-sms' ); ?></p>
 					</td>
 				</tr>
 				<tr valign="top">
-					<th scrope="row"><?php esc_html_e( 'Vonage(Nexmo) API Secret', 'texty-forms' ) ?></th>
+					<th scrope="row"><?php esc_html_e( 'Vonage(Nexmo) API Secret', 'form-sms' ) ?></th>
 					<td>
-						<input type="text" class="regular-text" name="textyforms_sms_settings[nexmo_api_secret]" id="textyforms_sms_settings[nexmo_api_secret]" value="<?php echo esc_attr( $nexmo_api_secret ); ?>">
-						<p class="description"><?php esc_html_e( 'Enter Vonage(Nexmo) API secret', 'texty-forms' ); ?></p>
+						<input type="text" class="regular-text" name="form_sms_settings[nexmo_api_secret]" id="form_sms_settings[nexmo_api_secret]" value="<?php echo esc_attr( $nexmo_api_secret ); ?>">
+						<p class="description"><?php esc_html_e( 'Enter Vonage(Nexmo) API secret', 'form-sms' ); ?></p>
 					</td>
 				</tr>
 				<tr valign="top">
-					<th scrope="row"><?php esc_html_e( 'Vonage(Nexmo) From Name', 'texty-forms' ) ?></th>
+					<th scrope="row"><?php esc_html_e( 'Vonage(Nexmo) From Name', 'form-sms' ) ?></th>
 					<td>
-						<input type="text" class="regular-text" name="textyforms_sms_settings[nexmo_from_name]" id="textyforms_sms_settings[nexmo_from_name]" value="<?php echo esc_attr( $nexmo_from_name ); ?>">
-						<p class="description"><?php esc_html_e( 'From which name the message will be sent to the users ( Default : VONAGE )', 'texty-forms' ); ?></p>
+						<input type="text" class="regular-text" name="form_sms_settings[nexmo_from_name]" id="form_sms_settings[nexmo_from_name]" value="<?php echo esc_attr( $nexmo_from_name ); ?>">
+						<p class="description"><?php esc_html_e( 'From which name the message will be sent to the users ( Default : VONAGE )', 'form-sms' ); ?></p>
 					</td>
 				</tr>
 			</table>
@@ -229,18 +229,18 @@ class Admin {
 			</p>
 			<table class="form-table">
 				<tr valign="top">
-					<th scrope="row"><?php esc_html_e( 'ClickSend Username', 'texty-forms' ) ?></th>
+					<th scrope="row"><?php esc_html_e( 'ClickSend Username', 'form-sms' ) ?></th>
 					<td>
-						<input type="text" class="regular-text" name="textyforms_sms_settings[clicksend_username]" id="textyforms_sms_settings[clicksend_username]" value="<?php echo esc_attr( $clicksend_username ); ?>">
-						<p class="description"><?php esc_html_e( 'Enter ClickSend Username', 'texty-forms' ); ?></p>
+						<input type="text" class="regular-text" name="form_sms_settings[clicksend_username]" id="form_sms_settings[clicksend_username]" value="<?php echo esc_attr( $clicksend_username ); ?>">
+						<p class="description"><?php esc_html_e( 'Enter ClickSend Username', 'form-sms' ); ?></p>
 					</td>
 				</tr>
 
 				<tr valign="top">
-					<th scrope="row"><?php esc_html_e( 'ClickSend API key', 'texty-forms' ) ?></th>
+					<th scrope="row"><?php esc_html_e( 'ClickSend API key', 'form-sms' ) ?></th>
 					<td>
-						<input type="text" class="regular-text" name="textyforms_sms_settings[clicksend_api]" id="textyforms_sms_settings[clicksend_api]" value="<?php echo esc_attr( $clicksend_api ); ?>">
-						<p class="description"><?php esc_html_e( 'Enter ClickSend API', 'texty-forms' ); ?></p>
+						<input type="text" class="regular-text" name="form_sms_settings[clicksend_api]" id="form_sms_settings[clicksend_api]" value="<?php echo esc_attr( $clicksend_api ); ?>">
+						<p class="description"><?php esc_html_e( 'Enter ClickSend API', 'form-sms' ); ?></p>
 					</td>
 				</tr>
 
@@ -249,6 +249,6 @@ class Admin {
 		</div>
 		<!-- End Clicksend Block -->
 		<?php
-		do_action( 'textyforms_gateway_settings_options_after' );
+		do_action( 'form_sms_gateway_settings_options_after' );
 	}
 }

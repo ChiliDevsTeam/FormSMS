@@ -2,21 +2,21 @@
 /**
  * FormSettings  class
  *
- * Manage  FormSettings related functionality on Wp Form
+ * Manage  FormSettings related functionality 
  *
- * @package ChiliDevs\TextyForms
+ * @package ChiliDevs\FormSMS
  */
 
 declare(strict_types=1);
 
-namespace ChiliDevs\TextyForms\Forms;
+namespace ChiliDevs\FormSMS\Forms;
 
 use WP_Error;
 
 /**
  * GravityFormSettings Class.
  *
- * @package ChiliDevs\TextyForms\Forms
+ * @package ChiliDevs\FormSMS\Forms
  */
 class GravityFormSettings {
 
@@ -41,10 +41,10 @@ class GravityFormSettings {
 	 * @return $gateway
 	 */
 	public function after_form_submission( $entry, $form ) {
-		$options = get_option( 'textyforms_sms_settings' );
+		$options = get_option( 'form_sms_settings' );
 
 		if ( empty( $options['sms_gateway'] ) ) {
-			return new WP_Error( 'no-options', __( 'Please set your settings first', 'texty-forms' ), [ 'status' => 401 ] );
+			return new WP_Error( 'no-options', __( 'Please set your settings first', 'form-sms' ), [ 'status' => 401 ] );
 		}
 		if ( isset( $form['gravity_forms_sms_enable'] ) && '' == $form['gravity_forms_sms_enable'] ) {
 			return;
@@ -68,7 +68,7 @@ class GravityFormSettings {
 		];
 
 		$sms_gateway   = $options['sms_gateway'];
-		$classname     = textyforms_class_mapping( $sms_gateway );
+		$classname     = form_sms_class_mapping( $sms_gateway );
 		$gateway_class = new $classname();
 		$gateway       = $gateway_class->send( $form_data, $options );
 
@@ -98,7 +98,7 @@ class GravityFormSettings {
 				<th><label for="gravity_forms_sms_enable">Enable SMS Notification' . gform_tooltip( 'gravity_forms_sms_enable', '', true ) . '</label></th>
 				<td>
 					<input id="gravity_forms_enable_sms" type="checkbox" value="1" ' . $enable_sms_checked . ' name="gravity_forms_sms_enable">
-					<label for="gravity_forms_enable_sms">' . __( 'If checked then SMS notification system is enable for this form', 'texty-forms' ) . '</label>
+					<label for="gravity_forms_enable_sms">' . __( 'If checked then SMS notification system is enable for this form', 'form-sms' ) . '</label>
 				</td>
 			</tr>';
 
@@ -158,7 +158,7 @@ class GravityFormSettings {
 	}
 
 	/**
-	 * Save texty-forms custom settings
+	 * Save form-sms custom settings
 	 *
 	 * @param  array $form Form Form array.
 	 *
@@ -180,7 +180,7 @@ class GravityFormSettings {
 	 */
 	public static function get_form_fields( $form ) {
 
-		$str = "<option value=''>" . __( 'Insert merge code', 'texty-forms' ) . "</option>";
+		$str = "<option value=''>" . __( 'Insert merge code', 'form-sms' ) . "</option>";
 
 		$required_fields = array();
 		$optional_fields = array();
@@ -227,7 +227,7 @@ class GravityFormSettings {
 		}
 
 		if ( ! empty( $required_fields ) ) {
-			$str .= "<optgroup label='" . __( 'Required form fields', 'texty-forms' ) . "'>";
+			$str .= "<optgroup label='" . __( 'Required form fields', 'form-sms' ) . "'>";
 
 			foreach ( $required_fields as $field ) {
 				$str .= self::get_field_variable( $field );
@@ -237,7 +237,7 @@ class GravityFormSettings {
 		}
 
 		if ( ! empty( $optional_fields ) ) {
-			$str .= "<optgroup label='" . __( 'Optional form fields', 'texty-forms' ) . "'>";
+			$str .= "<optgroup label='" . __( 'Optional form fields', 'form-sms' ) . "'>";
 			foreach ( $optional_fields as $field ) {
 				$str .= self::get_field_variable( $field );
 			}
@@ -245,7 +245,7 @@ class GravityFormSettings {
 		}
 
 		if ( ! empty( $pricing_fields ) ) {
-			$str .= "<optgroup label='" . __( 'Pricing form fields', 'texty-forms' ) . "'>";
+			$str .= "<optgroup label='" . __( 'Pricing form fields', 'form-sms' ) . "'>";
 
 			foreach ( $pricing_fields as $field ) {
 				$str .= self::get_field_variable( $field );
@@ -253,27 +253,27 @@ class GravityFormSettings {
 			$str .= "</optgroup>";
 		}
 
-		$str .= "<optgroup label='" . __( 'Other', 'texty-forms' ) . "'>
-				<option value='{ip}'>" . __( 'Client IP Address', 'texty-forms' ) ."</option>
-				<option value='{date_mdy}'>" . __( 'Date', 'texty-forms' ) . " (mm/dd/yyyy)</option>
-				<option value='{date_dmy}'>" . __( 'Date', 'texty-forms' ) . " (dd/mm/yyyy)</option>
-				<option value='{embed_post:ID}'>" . __( 'Embed Post/Page Id', 'texty-forms' ) . "</option>
-				<option value='{embed_post:post_title}'>" . __( 'Embed Post/Page Title', 'texty-forms' ) . "</option>
-				<option value='{embed_url}'>" . __( 'Embed URL', 'texty-forms' ) . "</option>
-				<option value='{entry_id}'>" . __( 'Entry Id', 'texty-forms' ) . "</option>
-				<option value='{entry_url}'>" . __( 'Entry URL', 'texty-forms' ) . "</option>
-				<option value='{form_id}'>" . __( 'Form Id', 'texty-forms' ) . "</option>
-				<option value='{form_title}'>" . __( 'Form Title', 'texty-forms' ) . "</option>
-				<option value='{user_agent}'>" . __( 'HTTP User Agent', 'texty-forms' ) . "</option>";
+		$str .= "<optgroup label='" . __( 'Other', 'form-sms' ) . "'>
+				<option value='{ip}'>" . __( 'Client IP Address', 'form-sms' ) ."</option>
+				<option value='{date_mdy}'>" . __( 'Date', 'form-sms' ) . " (mm/dd/yyyy)</option>
+				<option value='{date_dmy}'>" . __( 'Date', 'form-sms' ) . " (dd/mm/yyyy)</option>
+				<option value='{embed_post:ID}'>" . __( 'Embed Post/Page Id', 'form-sms' ) . "</option>
+				<option value='{embed_post:post_title}'>" . __( 'Embed Post/Page Title', 'form-sms' ) . "</option>
+				<option value='{embed_url}'>" . __( 'Embed URL', 'form-sms' ) . "</option>
+				<option value='{entry_id}'>" . __( 'Entry Id', 'form-sms' ) . "</option>
+				<option value='{entry_url}'>" . __( 'Entry URL', 'form-sms' ) . "</option>
+				<option value='{form_id}'>" . __( 'Form Id', 'form-sms' ) . "</option>
+				<option value='{form_title}'>" . __( 'Form Title', 'form-sms' ) . "</option>
+				<option value='{user_agent}'>" . __( 'HTTP User Agent', 'form-sms' ) . "</option>";
 
 		if ( \GFCommon::has_post_field( $form['fields'] ) ) {
-			$str .= "<option value='{post_id}'>" . __( 'Post Id', 'texty-forms' ) . "</option>
-					<option value='{post_edit_url}'>" . __( 'Post Edit URL', 'texty-forms' ) . "</option>";
+			$str .= "<option value='{post_id}'>" . __( 'Post Id', 'form-sms' ) . "</option>
+					<option value='{post_edit_url}'>" . __( 'Post Edit URL', 'form-sms' ) . "</option>";
 		}
 
-		$str .= "<option value='{user:display_name}'>" . __( 'User Display Name', 'texty-forms') . "</option>
-				<option value='{user:user_email}'>" . __( 'User Email', 'texty-forms' ) . "</option>
-				<option value='{user:user_login}'>" . __( 'User Login', 'texty-forms' ) ."</option>
+		$str .= "<option value='{user:display_name}'>" . __( 'User Display Name', 'form-sms') . "</option>
+				<option value='{user:user_email}'>" . __( 'User Email', 'form-sms' ) . "</option>
+				<option value='{user:user_login}'>" . __( 'User Login', 'form-sms' ) ."</option>
 		</optgroup>";
 
 		return $str;

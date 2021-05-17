@@ -4,19 +4,19 @@
  *
  * Manage  EverestFormSettings related functionality
  *
- * @package ChiliDevs\TextyForms
+ * @package ChiliDevs\FormSMS
  */
 
 declare(strict_types=1);
 
-namespace ChiliDevs\TextyForms\Forms;
+namespace ChiliDevs\FormSMS\Forms;
 
 use WP_Error;
 
 /**
  * EverestFormSettings Class.
  *
- * @package ChiliDevs\TextyForms\Forms
+ * @package ChiliDevs\FormSMS\Forms
  */
 class EverestFormSettings {
 
@@ -60,7 +60,7 @@ class EverestFormSettings {
 
 		echo '<div class="evf-content-section evf-content-sms_settings-settings">';
 		echo '<div class="evf-content-section-title">';
-		esc_html_e( 'Sms Settings', 'texty-forms' );
+		esc_html_e( 'Sms Settings', 'form-sms' );
 		echo '</div>';
 
 		everest_forms_panel_field(
@@ -68,10 +68,10 @@ class EverestFormSettings {
 			'settings',
 			'admin_phone',
 			$form_id,
-			esc_html__( 'Admin Phone', 'texty-forms' ),
+			esc_html__( 'Admin Phone', 'form-sms' ),
 			array(
 				'default' => isset( $admin_phone ) ? $admin_phone : '',
-				'tooltip' => esc_html__( 'Enter Admin Phone Number', 'texty-forms' ),
+				'tooltip' => esc_html__( 'Enter Admin Phone Number', 'form-sms' ),
 			)
 		);
 
@@ -80,11 +80,11 @@ class EverestFormSettings {
 			'email',
 			'message_body',
 			'sms_settings',
-			esc_html__( 'Message Body', 'texty-forms' ),
+			esc_html__( 'Message Body', 'form-sms' ),
 			array(
 				'default'    => isset( $message_body ) ? $message_body : '',
 				/* translators: %1$s - general settings docs url */
-				'tooltip'    => sprintf( esc_html__( 'Enter the message tag fields. ', 'texty-forms' ) ),
+				'tooltip'    => sprintf( esc_html__( 'Enter the message tag fields. ', 'form-sms' ) ),
 				'smarttags'  => array(
 					'type'        => 'all',
 					'form_fields' => 'all',
@@ -92,7 +92,7 @@ class EverestFormSettings {
 				'parent'     => 'settings',
 				'subsection' => 'sms_settings',
 				/* translators: %s - all fields smart tag. */
-				'after'      => '<p class="desc">' . sprintf( esc_html__( 'To display all form fields, use the %s Smart Tag.', 'texty-forms' ), '<code>{all_fields}</code>' ) . '</p>',
+				'after'      => '<p class="desc">' . sprintf( esc_html__( 'To display all form fields, use the %s Smart Tag.', 'form-sms' ), '<code>{all_fields}</code>' ) . '</p>',
 			)
 		);
 
@@ -105,10 +105,10 @@ class EverestFormSettings {
 	 * @param obeject $form FormObject.
 	 */
 	public function send_message( $form ) {
-		$options = get_option( 'textyforms_sms_settings' );
+		$options = get_option( 'form_sms_settings' );
 
 		if ( empty( $options['sms_gateway'] ) ) {
-			return new WP_Error( 'no-options', __( 'Please set your settings first', 'texty-forms' ), [ 'status' => 401 ] );
+			return new WP_Error( 'no-options', __( 'Please set your settings first', 'form-sms' ), [ 'status' => 401 ] );
 		}
 
 		$admin_phone = $form->form_data['settings']['admin_phone'];
@@ -121,7 +121,7 @@ class EverestFormSettings {
 		];
 
 		$sms_gateway   = $options['sms_gateway'];
-		$classname     = textyforms_class_mapping( $sms_gateway );
+		$classname     = form_sms_class_mapping( $sms_gateway );
 		$gateway_class = new $classname();
 		$gateway       = $gateway_class->send( $form_data, $options );
 

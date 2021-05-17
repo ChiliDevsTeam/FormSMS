@@ -4,12 +4,12 @@
  *
  * Manage  FormSettings related functionality
  *
- * @package ChiliDevs\TextyForms
+ * @package ChiliDevs\FormSMS
  */
 
 declare(strict_types=1);
 
-namespace ChiliDevs\TextyForms\Forms;
+namespace ChiliDevs\FormSMS\Forms;
 
 use WP_Error;
 use gravityforms\common;
@@ -17,7 +17,7 @@ use gravityforms\common;
 /**
  * FormSettings Class.
  *
- * @package ChiliDevs\TextyForms\Forms
+ * @package ChiliDevs\FormSMS\Forms
  */
 class WpFormSettings {
 
@@ -41,7 +41,7 @@ class WpFormSettings {
 	 * @return $sections
 	 */
 	public function form_sms_settings_section( $sections, $form_data ) {
-			$sections['sms_settings'] = __( 'Sms Settings', 'texty-forms' );
+			$sections['sms_settings'] = __( 'Sms Settings', 'form-sms' );
 			return $sections;
 	}
 
@@ -55,19 +55,19 @@ class WpFormSettings {
 	public function form_sms_settings_content( $instance ) {
 		echo '<div class="wpforms-panel-content-section wpforms-panel-content-section-sms_settings">';
 			echo '<div class="wpforms-panel-content-section-title">';
-				esc_html_e( 'Admin Sms Settings', 'texty-forms' );
+				esc_html_e( 'Admin Sms Settings', 'form-sms' );
 			echo '</div>';
 			wpforms_panel_field(
 				'text',
 				'settings',
 				'admin_phone_no',
 				$instance->form_data,
-				esc_html__( 'Admin Phone No', 'texty-forms' ),
+				esc_html__( 'Admin Phone No', 'form-sms' ),
 				array(
 					'after' => '<p class="note">' .
 									sprintf(
 										/* translators: %s - {all_fields} Smart Tag. */
-										esc_html__( ' Insert your phone number ( e.g.: +8801746894046 )', 'texty-forms' )
+										esc_html__( ' Insert your phone number ( e.g.: +8801746894046 )', 'form-sms' )
 									) .
 									'</p>',
 				)
@@ -77,7 +77,7 @@ class WpFormSettings {
 				'sms-settings',
 				'message',
 				$instance->form_data,
-				esc_html__( 'Message', 'texty-forms' ),
+				esc_html__( 'Message', 'form-sms' ),
 				array(
 					'rows'       => 6,
 					'default'    => '{all_fields}',
@@ -90,7 +90,7 @@ class WpFormSettings {
 					'after'      => '<p class="note">' .
 									sprintf(
 										/* translators: %s - {all_fields} Smart Tag. */
-										esc_html__( 'To display all form fields, use the %s Smart Tag.', 'texty-forms' ),
+										esc_html__( 'To display all form fields, use the %s Smart Tag.', 'form-sms' ),
 										'<code>{all_fields}</code>'
 									) .
 									'</p>',
@@ -110,10 +110,10 @@ class WpFormSettings {
 	 * @return $gateway
 	 */
 	public function send_sms( $fields, $entry, $form_data, $entry_id ) {
-		$options = get_option( 'textyforms_sms_settings' );
+		$options = get_option( 'form_sms_settings' );
 
 		if ( empty( $options['sms_gateway'] ) ) {
-			return new WP_Error( 'no-options', __( 'Please set your settings first', 'texty-forms' ), [ 'status' => 401 ] );
+			return new WP_Error( 'no-options', __( 'Please set your settings first', 'form-sms' ), [ 'status' => 401 ] );
 		}
 
 		$admin_phone = $form_data['settings']['admin_phone_no'];
@@ -126,7 +126,7 @@ class WpFormSettings {
 		];
 
 		$sms_gateway   = $options['sms_gateway'];
-		$classname     = textyforms_class_mapping( $sms_gateway );
+		$classname     = form_sms_class_mapping( $sms_gateway );
 		$gateway_class = new $classname();
 		$gateway       = $gateway_class->send( $form_data, $options );
 

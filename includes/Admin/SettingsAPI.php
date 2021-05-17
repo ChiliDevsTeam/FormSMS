@@ -4,12 +4,12 @@
  *
  * Manage SettingsAPI related functionality
  *
- * @package ChiliDevs\TextyForms
+ * @package ChiliDevs\FormSMS
  */
 
 declare(strict_types=1);
 
-namespace ChiliDevs\TextyForms\Admin;
+namespace ChiliDevs\FormSMS\Admin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -18,7 +18,7 @@ if ( ! class_exists( 'SettingsAPI' ) ) :
 	/**
 	 * SettingsAPI class.
 	 *
-	 * @package ChiliDevs\TextyForms\Admin
+	 * @package ChiliDevs\FormSMS\Admin
 	 */
 	class SettingsAPI {
 		/**
