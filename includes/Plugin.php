@@ -75,7 +75,7 @@ class Plugin {
 	 */
 	public function activator(): void {
         // phpcs:ignore;
-		// register_activation_hook( dirname( __FILE__, 2 ) . '/form-sms.php', [ Installer::class, 'activation' ] );
+		//register_activation_hook( dirname( __FILE__, 2 ) . '/form-sms.php', [ Installer::class, 'activation' ] );
 	}
 
 	/**

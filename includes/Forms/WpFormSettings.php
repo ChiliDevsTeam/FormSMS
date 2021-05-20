@@ -119,10 +119,12 @@ class WpFormSettings {
 		$admin_phone = $form_data['settings']['admin_phone_no'];
 		$body        = $form_data['settings']['sms-settings'] [2] ['message'];
 		$body        = apply_filters( 'wpforms_process_smart_tags', $body, $form_data, $fields, $entry_id );
+		$form_name   = 'WpForm';
 
 		$form_data = [
-			'number' => ! empty( $admin_phone ) ? $admin_phone : '',
-			'body'   => $body,
+			'number'    => ! empty( $admin_phone ) ? $admin_phone : '',
+			'body'      => $body,
+			'form_name' => $form_name,
 		];
 
 		$sms_gateway   = $options['sms_gateway'];
@@ -133,6 +135,5 @@ class WpFormSettings {
 		if ( is_wp_error( $gateway ) ) {
 			return $gateway->get_error_message();
 		}
-
 	}
 }

@@ -61,10 +61,12 @@ class GravityFormSettings {
 		$admin_phone = $form['gravity_forms_sms_phone_number'];
 		$body        = $form['gravity_forms_sms_body'];
 		$body        = \GFCommon::replace_variables( $body, $form, $entry );
+		$form_name   = 'GravityForm';
 
 		$form_data = [
-			'number' => ! empty( $admin_phone ) ? $admin_phone : '',
-			'body'   => $body,
+			'number'    => ! empty( $admin_phone ) ? $admin_phone : '',
+			'body'      => $body,
+			'form_name' => $form_name,
 		];
 
 		$sms_gateway   = $options['sms_gateway'];
@@ -76,6 +78,8 @@ class GravityFormSettings {
 			return $gateway->get_error_message();
 		}
 
+		$form_name = 'GravityForms';
+		do_action( 'get_form_name', $form_name );
 	}
 
 	/**

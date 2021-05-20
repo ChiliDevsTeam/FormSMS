@@ -151,11 +151,13 @@ class Cf7Settings {
 			$replace[] = ! empty( $postdata[$value] ) ? sanitize_text_field( $postdata[$value] ) : '';
 		}
 
-		$body = str_replace( $find, $replace, $form_settings['message'] );
+		$body        = str_replace( $find, $replace, $form_settings['message'] );
+		$form_name   = 'Contact Form 7';
 
 		$form_data = [
-			'number' => ! empty( $form_settings['phone'] ) ? $form_settings['phone'] : '',
-			'body'   => $body,
+			'number'    => ! empty( $form_settings['phone'] ) ? $form_settings['phone'] : '',
+			'body'      => $body,
+			'form_name' => $form_name,
 		];
 
 		$sms_gateway = $options['sms_gateway'];

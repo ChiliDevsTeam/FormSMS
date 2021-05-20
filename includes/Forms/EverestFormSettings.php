@@ -114,10 +114,12 @@ class EverestFormSettings {
 		$admin_phone = $form->form_data['settings']['admin_phone'];
 		$body        = $form->form_data['settings']['email']['sms_settings']['message_body'];
 		$body        = apply_filters( 'everest_forms_process_smart_tags', $body, $form->form_data, $form->fields, $form->entry_id );
+		$form_name   = 'EverestForm';
 
 		$form_data = [
-			'number' => ! empty( $admin_phone ) ? $admin_phone : '',
-			'body'   => $body,
+			'number'    => ! empty( $admin_phone ) ? $admin_phone : '',
+			'body'      => $body,
+			'form_name' => $form_name,
 		];
 
 		$sms_gateway   = $options['sms_gateway'];
