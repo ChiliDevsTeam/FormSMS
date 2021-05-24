@@ -27,5 +27,5 @@ interface GatewayInterface {
 	 *
 	 * @return array
 	 */
-	public function send( $form_data, $options );
+	public function send( $form_data, $options, $form_entry );
 }

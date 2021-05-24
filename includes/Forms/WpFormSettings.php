@@ -121,6 +121,19 @@ class WpFormSettings {
 		$body        = apply_filters( 'wpforms_process_smart_tags', $body, $form_data, $fields, $entry_id );
 		$form_name   = 'WpForm';
 
+		
+		$name    = $fields[0]['name'] . ': ' . $fields[0]['value'];
+		$email   = $fields[1]['name'] . ': ' . $fields[1]['value'];
+		$message = $fields[2]['name'] . ': ' . $fields[2]['value'];
+
+		$form_entry = [
+			'name'    => $name,
+			'email'   => $email,
+			'message' => $message,
+		];
+
+		$form_entry = array_filter( $form_entry );
+
 		$form_data = [
 			'number'    => ! empty( $admin_phone ) ? $admin_phone : '',
 			'body'      => $body,
@@ -130,7 +143,7 @@ class WpFormSettings {
 		$sms_gateway   = $options['sms_gateway'];
 		$classname     = form_sms_class_mapping( $sms_gateway );
 		$gateway_class = new $classname();
-		$gateway       = $gateway_class->send( $form_data, $options );
+		$gateway       = $gateway_class->send( $form_data, $options, $form_entry );
 
 		if ( is_wp_error( $gateway ) ) {
 			return $gateway->get_error_message();

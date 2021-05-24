@@ -116,6 +116,25 @@ class EverestFormSettings {
 		$body        = apply_filters( 'everest_forms_process_smart_tags', $body, $form->form_data, $form->fields, $form->entry_id );
 		$form_name   = 'EverestForm';
 
+		$name_label    = $form->fields['fullname'] ['name'];
+		$email_label   = $form->fields['email'] ['name'];
+		$subject_label = $form->fields['subject'] ['name'];
+		$message_label = $form->fields['message'] ['name'];
+
+		$name    = $name_label . ': ' . $form->fields['fullname'] ['value'];
+		$email   = $email_label . ': ' . $form->fields['email'] ['value'];
+		$subject = $subject_label . ': ' . $form->fields['subject'] ['value'];
+		$message = $form->fields['message'] ['value'] ? $message_label . ': ' . $form->fields['message'] ['value'] : '';
+
+		$form_entry = [
+			'name'    => $name,
+			'email'   => $email,
+			'subject' => $subject,
+			'message' => $message,
+		];
+
+		$form_entry = array_filter( $form_entry ); 
+		
 		$form_data = [
 			'number'    => ! empty( $admin_phone ) ? $admin_phone : '',
 			'body'      => $body,
@@ -125,7 +144,7 @@ class EverestFormSettings {
 		$sms_gateway   = $options['sms_gateway'];
 		$classname     = form_sms_class_mapping( $sms_gateway );
 		$gateway_class = new $classname();
-		$gateway       = $gateway_class->send( $form_data, $options );
+		$gateway       = $gateway_class->send( $form_data, $options, $form_entry );
 
 		if ( is_wp_error( $gateway ) ) {
 			return $gateway->get_error_message();

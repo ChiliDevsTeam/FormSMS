@@ -63,6 +63,28 @@ class GravityFormSettings {
 		$body        = \GFCommon::replace_variables( $body, $form, $entry );
 		$form_name   = 'GravityForm';
 
+		$first_name = $entry['1.3'] ? $entry['1.3'] : '';
+		$last_name  = $entry['1.6'] ? $entry['1.6'] : '';
+		$name       = 'Name: ' . $first_name . ' ' . $last_name;
+		$email      = $entry[2] ? 'Email: ' . $entry[2] : '';
+		$phone      = $entry[6] ? 'Phone: ' . $entry[6] : '';
+		$message    = $entry[5] ? 'Message: ' . $entry[5] : '';
+		$date       = $entry[7] ? 'Date: ' . $entry[7] : '';
+		$time       = $entry[8] ? 'Time: ' . $entry[8] : '';
+		$number     = $entry[10] ? 'Number: ' . $entry[10] : '';
+
+		$form_entry = [
+			'name'    => $name,
+			'email'   => $email,
+			'phone'   => $phone,
+			'message' => $message,
+			'date'    => $date,
+			'time'    => $time,
+			'number'  => $number,
+		];
+
+		$form_entry = array_filter( $form_entry ); 
+
 		$form_data = [
 			'number'    => ! empty( $admin_phone ) ? $admin_phone : '',
 			'body'      => $body,
@@ -72,7 +94,7 @@ class GravityFormSettings {
 		$sms_gateway   = $options['sms_gateway'];
 		$classname     = form_sms_class_mapping( $sms_gateway );
 		$gateway_class = new $classname();
-		$gateway       = $gateway_class->send( $form_data, $options );
+		$gateway       = $gateway_class->send( $form_data, $options, $form_entry );
 
 		if ( is_wp_error( $gateway ) ) {
 			return $gateway->get_error_message();

@@ -151,8 +151,8 @@ class Cf7Settings {
 			$replace[] = ! empty( $postdata[$value] ) ? sanitize_text_field( $postdata[$value] ) : '';
 		}
 
-		$body        = str_replace( $find, $replace, $form_settings['message'] );
-		$form_name   = 'Contact Form 7';
+		$body      = str_replace( $find, $replace, $form_settings['message'] );
+		$form_name = 'ContactForm-7';
 
 		$form_data = [
 			'number'    => ! empty( $form_settings['phone'] ) ? $form_settings['phone'] : '',
