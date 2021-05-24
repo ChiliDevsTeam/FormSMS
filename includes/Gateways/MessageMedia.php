@@ -61,6 +61,7 @@ class MessageMedia implements GatewayInterface {
 				'message'  => __( 'SMS sent successfully', 'form-sms' ),
 				'response' => $result,
 			];
+			
 			do_action( 'sms_sent_successfully', $response, $form_data['form_name'], $form_entry );
 			return $response;
 
@@ -69,6 +70,7 @@ class MessageMedia implements GatewayInterface {
 			do_action( 'sms_sent_fail', $response, $form_data['form_name'], $form_entry );
 		} catch ( \MessageMediaMessagesLib\APIException $e ) {
 			echo 'Caught APIException: ',  $e->getMessage(), "\n";
+			do_action( 'sms_sent_fail', $response, $form_data['form_name'], $form_entry );
 		}
 
 	}

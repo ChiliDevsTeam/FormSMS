@@ -51,6 +51,7 @@ class Plivo implements GatewayInterface {
 				[ $form_data['number'] ],
 				$form_data['body']
 			);
+			
 			do_action( 'sms_sent_successfully', $response, $form_data['form_name'], $form_entry );
 		} catch ( Exception $e ) {
 			do_action( 'sms_sent_fail', $response, $form_data['form_name'], $form_entry );

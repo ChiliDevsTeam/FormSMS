@@ -59,6 +59,7 @@ class MessageBird implements GatewayInterface {
 				'message'  => __( 'SMS sent successfully', 'form-sms' ),
 				'response' => $message,
 			];
+			
 			do_action( 'sms_sent_successfully', $response, $form_data['form_name'], $form_entry );
 			return $response;
 		} else {
@@ -66,6 +67,7 @@ class MessageBird implements GatewayInterface {
 				'message'  => __( 'The message failed with status:', 'form-sms' ) . $message->getStatus(),
 				'response' => $message,
 			];
+			
 			do_action( 'sms_sent_fail', $response, $form_data['form_name'], $form_entry );
 			return $response;
 		}
