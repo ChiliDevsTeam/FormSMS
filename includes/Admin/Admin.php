@@ -160,9 +160,14 @@ class Admin {
 	 */
 	public function get_sms_gateway() {
 		$gateway = array(
-			''          => __( '--select--', 'form-sms' ),
-			'nexmo'     => __( 'Vonage(Nexmo)', 'form-sms' ),
-			'clicksend' => __( 'ClickSend', 'form-sms' ),
+			''             => __( '--select--', 'form-sms' ),
+			'nexmo'        => __( 'Vonage(Nexmo)', 'form-sms' ),
+			'clicksend'    => __( 'ClickSend', 'form-sms' ),
+			'telesign'     => __( 'Telesign', 'form-sms' ),
+			'messagemedia' => __( 'MessageMedia', 'form-sms' ),
+			'messagebird'  => __( 'MessageBird', 'form-sms' ),
+			'twilio'       => __( 'Twilio', 'form-sms' ),
+			'plivo'        => __( 'Plivo', 'form-sms' ),
 		);
 
 		return apply_filters( 'form_sms_gateway', $gateway );
@@ -186,6 +191,34 @@ class Admin {
 		$clicksend_username = form_sms_get_option( 'clicksend_username', 'form_sms_settings', '' );
 		$clicksend_api      = form_sms_get_option( 'clicksend_api', 'form_sms_settings', '' );
 		$clicksend_helper   = sprintf( __( 'Enter ClickSend details. Please visit <a href="%s" target="_blank">%s</a> and get your username and api keys', 'form-sms' ), 'https://dashboard.clicksend.com/signup', 'Clicksend' );
+		
+		// Telesign properties.
+		$telesign_customer_id = form_sms_get_option( 'telesign_customer_id', 'form_sms_settings', '' );
+		$telesign_api_key     = form_sms_get_option( 'telesign_api_key', 'form_sms_settings', '' );
+		$telesign_helper      = sprintf( __( 'Enter your telesign Details. Please visit <a href="%s" target="_blank">%s</a> and get your api keys and options', 'form-sms' ), 'https://portal.telesign.com/login', 'telesign' );
+
+		// Messagemedia properties.
+		$messagemedia_api_key    = form_sms_get_option( 'messagemedia_api_key', 'form_sms_settings', '' );
+		$messagemedia_api_secret = form_sms_get_option( 'messagemedia_api_secret', 'form_sms_settings', '' );
+		$messagemedia_helper     = sprintf( __( 'Enter MessageMedia details. Please visit <a href="%s" target="_blank">%s</a> and get your api key and api secret', 'form-sms' ), 'https://hub.messagemedia.com/register', 'MessageMedia' );
+
+		// Messagebird properties.
+		$messagebird_is_test_mode = form_sms_get_option( 'messagebird_is_test_mode', 'form_sms_settings', '' );
+		$messagebird_live_key     = form_sms_get_option( 'messagebird_live_key', 'form_sms_settings', '' );
+		$messagebird_test_key     = form_sms_get_option( 'messagebird_test_key', 'form_sms_settings', '' );
+		$messagebird_helper       = sprintf( __( 'Enter your MessageBird API details. Please visit <a href = "%s" target="_blank">%s</a> and get your api keys and options', 'form-sms' ), 'https://www.messagebird.com/en/pricing/', 'MessageBird' );
+
+		// Twlio properties.
+		$twilio_account_sid   = form_sms_get_option( 'twilio_account_sid', 'form_sms_settings', '' );
+		$twilio_auth_token    = form_sms_get_option( 'twilio_auth_token', 'form_sms_settings', '' );
+		$twilio_source_number = form_sms_get_option( 'twilio_source_number', 'form_sms_settings', '' );
+		$twilio_helper        = sprintf( __( 'Enter your Twilio details. Please visit <a href="%s" target="_blank">%s</a> and get your api keys and options', 'form-sms' ), 'https://www.twilio.com/login', 'twilio' );
+
+		// Plivo properties.
+		$plivo_auth_id       = form_sms_get_option( 'plivo_auth_id', 'form_sms_settings', '' );
+		$plivo_auth_token    = form_sms_get_option( 'plivo_auth_token', 'form_sms_settings', '' );
+		$plivo_source_number = form_sms_get_option( 'plivo_source_number', 'form_sms_settings', '' );
+		$plivo_helper        = sprintf( __( 'Enter your Plivo Details. Please visit <a href="%s" target="_blank">%s</a> and get your api keys and options', 'form-sms' ), 'https://console.plivo.com/', 'plivo' );
 
 		?>
 
@@ -248,6 +281,164 @@ class Admin {
 
 		</div>
 		<!-- End Clicksend Block -->
+
+		<!-- Start Telesign Sms Api Block -->
+
+		<div class="telesign_wrapper hide_class">
+			<hr>
+			<p style="margin-top:15px; margin-bottom:0px; font-style: italic; font-size: 14px;">
+				<strong><?php echo wp_kses_post( $telesign_helper ); ?></strong>
+			</p>
+			<table class="form-table">
+				<tr valign="top">
+					<th scrope="row"><?php esc_html_e( 'Telesign customer Id', 'form-sms' ) ?></th>
+					<td>
+						<input type="text" class="regular-text" name="form_sms_settings[telesign_customer_id]" id="form_sms_settings[telesign_customer_id" value="<?php echo esc_attr( $telesign_customer_id ); ?>">
+						<p class="description"><?php esc_html_e( 'Enter Telesign Customer Id', 'form-sms' ); ?></p>
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scrope="row"><?php esc_html_e( 'Telesign API Key', 'form-sms' ) ?></th>
+					<td>
+						<input type="text" class="regular-text" name="form_sms_settings[telesign_api_key]" id="form_sms_settings[telesign_api_key]" value="<?php echo esc_attr( $telesign_api_key ); ?>">
+						<p class="description"><?php esc_html_e( 'Enter Telesign Api Key', 'form-sms' ); ?></p>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<!-- End Telesign Sms Api Block -->
+
+		<!-- Start Messagemedia  Sms Api Block -->
+		<div class="messagemedia_wrapper hide_class">
+			<hr>
+			<p style="margin-top:15px; margin-bottom:0px; font-style: italic; font-size: 14px;">
+				<strong><?php echo wp_kses_post( $messagemedia_helper ); ?></strong>
+			</p>
+			<table class="form-table">
+				<tr valign="top">
+					<th scrope="row"><?php esc_html_e( 'MessageMedia API key', 'form-sms' ) ?></th>
+					<td>
+						<input type="text" class="regular-text" name="form_sms_settings[messagemedia_api_key]" id="form_sms_settings[messagemedia_api_key]" value="<?php echo esc_attr( $messagemedia_api_key ); ?>">
+						<p class="description"><?php esc_html_e( 'Enter MessageMedia API key', 'form-sms' ); ?></p>
+					</td>
+				</tr>
+
+				<tr valign="top">
+					<th scrope="row"><?php esc_html_e( 'MessageMedia API secret', 'form-sms' ) ?></th>
+					<td>
+						<input type="text" class="regular-text" name="form_sms_settings[messagemedia_api_secret]" id="form_sms_settings[messagemedia_api_secret]" value="<?php echo esc_attr( $messagemedia_api_secret ); ?>">
+						<p class="description"><?php esc_html_e( 'Enter MessageMedia API secret', 'form-sms' ); ?></p>
+					</td>
+				</tr>
+
+			</table>
+
+		</div>
+		<!-- End Messagemedia Sms Api Block -->
+
+		<!-- Start Messagebird Sms Api Block  -->
+		<div class="messagebird_wrapper hide_class">
+			<hr>
+			<p style="margin-top:15px; margin-bottom:0px; font-style: italic; font-size: 14px;">
+				<strong><?php echo wp_kses_post( $messagebird_helper ); ?></strong>
+			</p>
+			<table class="form-table">
+				<tr valign="top">
+					<th scrope="row"><?php esc_html_e( 'Enable Test mode', 'form-sms' ) ?></th>
+					<td>
+						<input type="hidden" name="form_sms_settings[messagebird_is_test_mode]" value="no">
+						<label for="form_sms_settings[messagebird_is_test_mode]">
+							<input type="checkbox" class="checkbox" name="form_sms_settings[messagebird_is_test_mode]" id="form_sms_settings[messagebird_is_test_mode]" value="yes" <?php checked( $messagebird_is_test_mode, 'yes' ); ?>>
+							<?php esc_html_e( 'Enable test mode', 'form-sms' ); ?>
+						</label>
+
+						<p class="description"><?php esc_html_e( 'Selet the mode Test or live', 'form-sms' ); ?></p>
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scrope="row"><?php esc_html_e( 'Live Key', 'form-sms' ) ?></th>
+					<td>
+						<input type="text" class="regular-text" name="form_sms_settings[messagebird_live_key]" id="form_sms_settings[messagebird_live_key]" value="<?php echo esc_attr( $messagebird_live_key ); ?>">
+						<p class="description"><?php esc_html_e( 'Enter your live API key', 'form-sms' ); ?></p>
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scrope="row"><?php esc_html_e( 'Test Key', 'form-sms' ) ?></th>
+					<td>
+						<input type="text" class="regular-text" name="form_sms_settings[messagebird_test_key]" id="form_sms_settings[messagebird_test_key]" value="<?php echo esc_attr( $messagebird_test_key ); ?>">
+						<p class="description"><?php esc_html_e( 'Enter your Test API key', 'form-sms' ); ?></p>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<!-- End  Messagebird  Sms Api Block -->
+
+		<!-- Start Twilio  Sms Api Block -->
+		<div class="twilio_wrapper hide_class">
+			<hr>
+			<p style="margin-top:15px; margin-bottom:0px; font-style: italic; font-size: 14px;">
+				<strong><?php echo wp_kses_post( $twilio_helper ); ?></strong>
+			</p>
+			<table class="form-table">
+				<tr valign="top">
+					<th scrope="row"><?php esc_html_e( 'Twilio Sid', 'form-sms' ) ?></th>
+					<td>
+						<input type="text" class="regular-text" name="form_sms_settings[twilio_account_sid]" id="form_sms_settings[twilio_account_sid]" value="<?php echo esc_attr( $twilio_account_sid ); ?>">
+						<p class="description"><?php esc_html_e( 'Enter Twilio Account Sid', 'form-sms' ); ?></p>
+					</td>
+				</tr>
+
+				<tr valign="top">
+					<th scrope="row"><?php esc_html_e( 'Twilio Auth Token', 'form-sms' ) ?></th>
+					<td>
+						<input type="text" class="regular-text" name="form_sms_settings[twilio_auth_token]" id="form_sms_settings[twilio_auth_token]" value="<?php echo esc_attr( $twilio_auth_token ); ?>">
+						<p class="description"><?php esc_html_e( 'Enter Twilio Auth Token', 'form-sms' ); ?></p>
+					</td>
+				</tr>
+
+				<tr valign="top">
+					<th scrope="row"><?php esc_html_e( 'Twilio Source Number', 'form-sms' ) ?></th>
+					<td>
+						<input type="text" class="regular-text" name="form_sms_settings[twilio_source_number]" id="form_sms_settings[twilio_source_number]" value="<?php echo esc_attr( $twilio_source_number ); ?>">
+						<p class="description"><?php esc_html_e( 'Enter Twilio Source Number', 'form-sms' ); ?></p>
+					</td>
+				</tr>
+
+			</table>
+		</div>
+		<!-- End Twilio Sms Api Block -->
+
+		<!-- Start Plivo SMS block -->
+		<div class="plivo_wrapper hide_class">
+			<hr>
+			<p style="margin-top:15px; margin-bottom:0px; font-style: italic; font-size: 14px;">
+				<strong><?php echo wp_kses_post( $plivo_helper ); ?></strong>
+			</p>
+			<table class="form-table">
+				<tr valign="top">
+					<th scrope="row"><?php esc_html_e( 'Plivo Auth Id', 'form-sms' ) ?></th>
+					<td>
+						<input type="text" class="regular-text" name="form_sms_settings[plivo_auth_id]" id="form_sms_settings[plivo_auth_id]" value="<?php echo esc_attr( $plivo_auth_id ); ?>">
+						<p class="description"><?php esc_html_e( 'Please Enter Plivo Auth Id', 'form-sms' ); ?></p>
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scrope="row"><?php esc_html_e( 'Plivo Auth Token', 'form-sms' ) ?></th>
+					<td>
+						<input type="text" class="regular-text" name="form_sms_settings[plivo_auth_token]" id="form_sms_settings[plivo_auth_token]" value="<?php echo esc_attr( $plivo_auth_token ); ?>">
+						<p class="description"><?php esc_html_e( 'Please Enter Plivo Auth Token', 'form-sms' ); ?></p>
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scrope="row"><?php esc_html_e( 'Plivo Surce Number', 'form-sms' ) ?></th>
+					<td>
+						<input type="text" class="regular-text" name="form_sms_settings[plivo_source_number]" id="form_sms_settings[plivo_source_number]" value="<?php echo esc_attr( $plivo_source_number ); ?>">
+						<p class="description"><?php esc_html_e( 'From which name the message will be sent to the users ( Default : Plivo )', 'form-sms' ); ?></p>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<!-- End Plivo Api Block -->
 		<?php
 		do_action( 'form_sms_gateway_settings_options_after' );
 	}
