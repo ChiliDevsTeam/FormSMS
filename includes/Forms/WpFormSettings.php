@@ -1,8 +1,8 @@
 <?php
 /**
- * FormSettings  class
+ * WpFormSettings class
  *
- * Manage  FormSettings related functionality
+ * Manage  WpFormSettings related functionality
  *
  * @package ChiliDevs\FormSMS
  */
@@ -12,10 +12,9 @@ declare(strict_types=1);
 namespace ChiliDevs\FormSMS\Forms;
 
 use WP_Error;
-use gravityforms\common;
 
 /**
- * FormSettings Class.
+ * WpFormSettings Class.
  *
  * @package ChiliDevs\FormSMS\Forms
  */

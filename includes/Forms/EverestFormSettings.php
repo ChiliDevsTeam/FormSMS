@@ -2,7 +2,7 @@
 /**
  * EverestFormSettings  class
  *
- * Manage  EverestFormSettings related functionality
+ * Manage EverestFormSettings related functionality
  *
  * @package ChiliDevs\FormSMS
  */

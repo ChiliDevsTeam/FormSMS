@@ -1,8 +1,8 @@
 <?php
 /**
- * FormSettings  class
+ * GravityFormSettings class
  *
- * Manage  FormSettings related functionality 
+ * Manage  GravityFormSettings related functionality 
  *
  * @package ChiliDevs\FormSMS
  */
@@ -63,15 +63,15 @@ class GravityFormSettings {
 		$body        = \GFCommon::replace_variables( $body, $form, $entry );
 		$form_name   = 'GravityForm';
 
-		$first_name = $entry['1.3'] ? $entry['1.3'] : '';
-		$last_name  = $entry['1.6'] ? $entry['1.6'] : '';
+		$first_name = isset( $entry['1.3'] ) ? $entry['1.3'] : '';
+		$last_name  = isset( $entry['1.6'] ) ? $entry['1.6'] : '';
 		$name       = 'Name: ' . $first_name . ' ' . $last_name;
-		$email      = $entry[2] ? 'Email: ' . $entry[2] : '';
-		$phone      = $entry[6] ? 'Phone: ' . $entry[6] : '';
-		$message    = $entry[5] ? 'Message: ' . $entry[5] : '';
-		$date       = $entry[7] ? 'Date: ' . $entry[7] : '';
-		$time       = $entry[8] ? 'Time: ' . $entry[8] : '';
-		$number     = $entry[10] ? 'Number: ' . $entry[10] : '';
+		$email      = isset( $entry[2] ) ? 'Email: ' . $entry[2] : '';
+		$message    = isset( $entry[5] ) ? 'Message: ' . $entry[5] : '';
+		$phone      = isset( $entry[6] ) ? 'Phone: ' . $entry[6] : '';
+		$date       = isset( $entry[7] ) ? 'Date: ' . $entry[7] : '';
+		$time       = isset( $entry[8] ) ? 'Time: ' . $entry[8] : '';
+		$number     = isset( $entry[10] ) ? 'Number: ' . $entry[10] : '';
 
 		$form_entry = [
 			'name'    => $name,
@@ -297,7 +297,7 @@ class GravityFormSettings {
 					<option value='{post_edit_url}'>" . __( 'Post Edit URL', 'form-sms' ) . "</option>";
 		}
 
-		$str .= "<option value='{user:display_name}'>" . __( 'User Display Name', 'form-sms') . "</option>
+		$str .= "<option value='{user:display_name}'>" . __( 'User Display Name', 'form-sms' ) . "</option>
 				<option value='{user:user_email}'>" . __( 'User Email', 'form-sms' ) . "</option>
 				<option value='{user:user_login}'>" . __( 'User Login', 'form-sms' ) ."</option>
 		</optgroup>";

@@ -1,8 +1,8 @@
 <?php
 /**
- * FormSettings  class
+ * Cf7Settings class
  *
- * Manage  FormSettings related functionality
+ * Manage Cf7Settings related functionality
  *
  * @package ChiliDevs\FormSMS
  */
@@ -14,7 +14,7 @@ namespace ChiliDevs\FormSMS\Forms;
 use WP_Error;
 
 /**
- * FormSettings Class.
+ * Cf7Settings Class.
  *
  * @package ChiliDevs\FormSMS\Forms
  */

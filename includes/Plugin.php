@@ -15,6 +15,7 @@ use ChiliDevs\FormSMS\Forms\GravityFormSettings;
 use ChiliDevs\FormSMS\Forms\WpFormSettings;
 use ChiliDevs\FormSMS\Forms\Cf7Settings;
 use ChiliDevs\FormSMS\Forms\EverestFormSettings;
+use ChiliDevs\FormSMS\Admin\SmsLog;
 
 /**
  * Class Plugin.
@@ -66,6 +67,7 @@ class Plugin {
 		new GravityFormSettings();
 		new Cf7Settings();
 		new EverestFormSettings();
+		new SmsLog();
 	}
 
 	/**
@@ -75,7 +77,7 @@ class Plugin {
 	 */
 	public function activator(): void {
         // phpcs:ignore;
-		//register_activation_hook( dirname( __FILE__, 2 ) . '/form-sms.php', [ Installer::class, 'activation' ] );
+		register_activation_hook( dirname( __FILE__, 2 ) . '/form-sms.php', [ Installer::class, 'activation' ] );
 	}
 
 	/**

@@ -47,4 +47,3 @@ function form_sms_class_mapping( $class_name = '' ) {
 	] );
 	return isset( $classes[ $class_name ] ) ? $classes[ $class_name ] : '';
 }
-

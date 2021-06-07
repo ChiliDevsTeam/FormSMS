@@ -24,6 +24,7 @@ interface GatewayInterface {
 	 *
 	 * @param array $form_data Hold form data.
 	 * @param array $options Keep all gateway settings.
+	 * @param array $form_entry Get form settings.
 	 *
 	 * @return array
 	 */
